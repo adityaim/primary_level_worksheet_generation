@@ -8,7 +8,16 @@ from reportlab.lib.enums import TA_CENTER, TA_LEFT
 import io
 import random
 import time
+import os
 
+def serve_google_verification():
+    if st.query_params.get("verify") == "google15fc09166f3671ca":
+        with open("google15fc09166f3671ca.html", "r") as file:
+            html = file.read()
+            st.markdown(html, unsafe_allow_html=True)
+        st.stop()
+
+serve_google_verification()
 st.set_page_config(
     page_title="Arithmetic Worksheet Generator",
     page_icon="📝",
