@@ -29,11 +29,5 @@ This app allows you to:
 - **Pillow (optional)** – For adding visual elements if needed
 
 ---
-
-## 🚀 Getting Started
-
-### 1. Clone this repository
-
-```bash
-git clone https://github.com/yourusername/worksheet-generator.git
-cd worksheet-generator
+## 📝 Live demo 
+**https://rishikumaruchana.streamlit.app/**
