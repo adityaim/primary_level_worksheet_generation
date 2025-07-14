@@ -1,3 +1,4 @@
+
 import streamlit as st
 import numpy as np
 from reportlab.lib.pagesizes import letter
@@ -290,19 +291,11 @@ def main():
         except ValueError:
             st.error("Please enter a valid number")
             return
-        
-        # Only show mode selection if more than 1 student
-        if num_students > 1:
-            mode = st.selectbox(
-                "Choose worksheet distribution mode:",
-                ["SAME", "UNIQUE"],
-                help="SAME: All students get identical questions | UNIQUE: Each student gets different questions"
-            )
-        else:
-            # For single student, automatically set to UNIQUE mode
-            mode = "UNIQUE"
-            st.info("✅ Single student mode")
-        
+        mode = st.selectbox(
+            "Choose worksheet distribution mode:",
+            ["SAME", "UNIQUE"],
+            help="SAME: All students get identical questions | UNIQUE: Each student gets different questions"
+        )
         if st.button("Continue to Question Setup"):
             st.session_state.num_students = num_students
             st.session_state.mode = mode
@@ -311,16 +304,6 @@ def main():
 
     elif st.session_state.step == 'operations':
         st.markdown('<h3 class="step-title">Operation Selection</h3>', unsafe_allow_html=True)
-        
-        # Show error if somehow SAME mode is selected with 1 student
-        if st.session_state.num_students == 1 and st.session_state.mode == "SAME":
-            st.error("❌ Error: SAME mode is not allowed for single student worksheets!")
-            st.error("Please go back and restart the configuration.")
-            if st.button("← Back to Configuration"):
-                st.session_state.step = 'start'
-                st.rerun()
-            return
-        
         st.write(f"*Configuration:* {st.session_state.num_students} students, {st.session_state.mode} mode")
         operation = st.selectbox(
             "Select the type of arithmetic operation:",
@@ -381,19 +364,7 @@ def main():
 
     elif st.session_state.step == 'instructions':
         st.markdown('<h3 class="step-title">Worksheet Instructions</h3>', unsafe_allow_html=True)
-        
-        # Show error if somehow SAME mode is selected with 1 student
-        if st.session_state.num_students == 1 and st.session_state.mode == "SAME":
-            st.error("❌ Error: SAME mode is not allowed for single student worksheets!")
-            st.error("Please go back and restart the configuration.")
-            if st.button("← Back to Configuration"):
-                st.session_state.step = 'start'
-                st.rerun()
-            return
-        
         st.write(f"*Final Configuration:* {st.session_state.num_students} students, {st.session_state.mode} mode")
-        # st.write(f"*Final Configuration:* {'Single student' if st.session_state.num_students == 1 else f'{st.session_state.num_students} students'}, {st.session_state.mode} mode")
-
         st.write(f"*Questions Added:* {', '.join(st.session_state.operation_info)}")
         st.markdown("---")
         st.markdown("### Add Instructions for Students")
